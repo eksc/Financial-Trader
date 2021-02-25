@@ -10,8 +10,8 @@ namespace SimpleTrader.EntityFramework
     {
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Account> Accounts{ get; set; }
-        public DbSet<AssertTransaction> AssertTransactions{ get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<AssertTransaction> AssertTransactions { get; set; }
 
         public SimpleTraderDbContext(DbContextOptions options) : base(options)
         {
@@ -20,7 +20,7 @@ namespace SimpleTrader.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Stock);
+            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Asset);
 
             base.OnModelCreating(modelBuilder);
         }

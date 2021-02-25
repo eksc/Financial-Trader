@@ -9,7 +9,8 @@ namespace SimpleTrader.WPF.State.Navigations
     public enum ViewType
     {
         Home,
-        Portfolio
+        Portfolio,
+        Buy
     }
     public interface INavigator
     {

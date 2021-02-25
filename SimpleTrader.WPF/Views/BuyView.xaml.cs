@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,18 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SimpleTrader.WPF
+namespace SimpleTrader.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BuyView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BuyView : UserControl
     {
-        public MainWindow(object dataContext)
+        public BuyView()
         {
             InitializeComponent();
-
-            DataContext = dataContext;
         }
     }
 }

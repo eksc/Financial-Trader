@@ -8,6 +8,6 @@ namespace SimpleTrader.Domain.Models
     {
         public User AccountHolder { get; set; }
         public double Balance { get; set; }
-        public IEnumerable<AssertTransaction> AssertTransactions { get; set; }
+        public ICollection<AssertTransaction> AssertTransactions { get; set; }
     }
 }

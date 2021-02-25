@@ -8,7 +8,7 @@ using SimpleTrader.EntityFramework;
 
 namespace SimpleTrader.EntityFramework.Migrations
 {
-    [DbContext(typeof(SimpleTraderDbContextFactory))]
+    [DbContext(typeof(SimpleTraderDbContext))]
     partial class SimpleTraderDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -104,7 +104,7 @@ namespace SimpleTrader.EntityFramework.Migrations
                         .WithMany("AssertTransactions")
                         .HasForeignKey("AccountId");
 
-                    b.OwnsOne("SimpleTrader.Domain.Models.Stock", "Stock", b1 =>
+                    b.OwnsOne("SimpleTrader.Domain.Models.Asset", "Asset", b1 =>
                         {
                             b1.Property<int>("AssertTransactionId")
                                 .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace SimpleTrader.EntityFramework.Migrations
 
                     b.Navigation("Account");
 
-                    b.Navigation("Stock");
+                    b.Navigation("Asset");
                 });
 
             modelBuilder.Entity("SimpleTrader.Domain.Models.Account", b =>
