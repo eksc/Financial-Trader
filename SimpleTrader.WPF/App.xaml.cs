@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
+using SimpleTrader.Domain.Services.AuthenticationServices;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.EntityFramework;
 using SimpleTrader.EntityFramework.Services;
@@ -23,9 +25,11 @@ namespace SimpleTrader.WPF
     /// </summary>
     public partial class App : Application
     {
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             IServiceProvider serviceProvider = CreateServiceProvider();
+            IAuthenticationService authenticationService = serviceProvider.GetRequiredService<IAuthenticationService>();
+            authenticationService.Login("Ekscc", "Test123");
 
             Window window = serviceProvider.GetRequiredService<MainWindow>();
             window.Show();
@@ -39,9 +43,13 @@ namespace SimpleTrader.WPF
 
             services.AddSingleton<SimpleTraderDbContextFactory>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
+            services.AddSingleton<IAccountService, AccountDataService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IStockPriceService, StockPriceService>();
             services.AddSingleton<IBuyStockService, BuyStockService>();
             services.AddSingleton<IMajorIndexService, MajorIndexService>();
+
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             services.AddSingleton<IRoomSimpleTraderViewModelFactory, RoomSimpleTraderViewModelFactory>();
             services.AddSingleton<ISimpleTraderViewModelFactory<HomeViewModel>, HomeViewModelFactory>();
