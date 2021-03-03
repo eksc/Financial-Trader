@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\LoginBackgroundImage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SimpleTrader.EntityFramework\SimpleTrader.EntityFramework.csproj" />
     <ProjectReference Include="..\SimpleTrader.FinancialModelingPrepAPI\SimpleTrader.FinancialModelingPrepAPI.csproj" />
     <ProjectReference Include="..\SimpleTraderDomain\SimpleTrader.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\LoginBackgroundImage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
