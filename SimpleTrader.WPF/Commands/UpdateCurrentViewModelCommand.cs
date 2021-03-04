@@ -14,10 +14,10 @@ namespace SimpleTrader.WPF.Commands
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigator _navigator;
-        private readonly IRoomSimpleTraderViewModelFactory _simpleTraderViewModelAbstractFactory;
+        private readonly ISimpleTraderViewModelFactory _simpleTraderViewModelAbstractFactory;
 
         public UpdateCurrentViewModelCommand(INavigator navigator,
-            IRoomSimpleTraderViewModelFactory simpleTraderViewModelAbstractFactory)
+            ISimpleTraderViewModelFactory simpleTraderViewModelAbstractFactory)
         {
             _navigator = navigator;
             _simpleTraderViewModelAbstractFactory = simpleTraderViewModelAbstractFactory;
