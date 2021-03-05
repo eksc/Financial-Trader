@@ -1,1 +1,1 @@
-Application on WPF for view financial indexes.
+Application on WPF for view and buy financial indexes.
