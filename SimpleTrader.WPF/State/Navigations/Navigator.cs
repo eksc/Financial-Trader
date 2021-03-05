@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace SimpleTrader.WPF.State.Navigations
 {
-    public class Navigator : ObservableObject, INavigator
+    public class Navigator : INavigator
     {
         private ViewModelBase _currentViewModel;
                     
@@ -20,9 +20,11 @@ namespace SimpleTrader.WPF.State.Navigations
             set 
             { 
                 _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
+                StateChanged?.Invoke();
             }
         }
+
+        public event Action StateChanged;
 
     }
 }

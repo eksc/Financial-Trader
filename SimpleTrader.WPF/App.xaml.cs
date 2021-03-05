@@ -7,6 +7,7 @@ using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.EntityFramework;
 using SimpleTrader.EntityFramework.Services;
 using SimpleTrader.FinancialModelingPrepAPI.Services;
+using SimpleTrader.WPF.State.Accounts;
 using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigations;
 using SimpleTrader.WPF.ViewModels;
@@ -75,7 +76,7 @@ namespace SimpleTrader.WPF
                 return () => services.GetRequiredService<BuyViewModel>();
             });
 
-            services.AddSingleton<ViewModelDelegateRenavigator<HomeViewModel>>(services => );
+            services.AddSingleton<ViewModelDelegateRenavigator<HomeViewModel>>();
             services.AddSingleton<CreateViewModel<LoginViewModel>>(services =>
             {
                 return () => new LoginViewModel(
@@ -86,6 +87,7 @@ namespace SimpleTrader.WPF
             services.AddScoped<MainViewModel>();
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<IAuthenticator, Authenticator>();
+            services.AddScoped<IAccountStore, AccountStore>();
             services.AddScoped<BuyViewModel>();
 
             services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
