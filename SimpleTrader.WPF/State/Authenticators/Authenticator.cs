@@ -1,6 +1,5 @@
 ﻿using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services.AuthenticationServices;
-using SimpleTrader.WPF.Models;
 using SimpleTrader.WPF.State.Accounts;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleTrader.WPF.State.Authenticators
 {
-    public class Authenticator : ObservableObject, IAuthenticator
+    public class Authenticator : IAuthenticator
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IAccountStore _accountStore;
