@@ -42,7 +42,6 @@
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
                            Margin="5"
-                           HorizontalAlignment="Right"
                            Text="Changes"/>
                 <TextBlock Grid.Row="1"
                            Grid.Column="1"

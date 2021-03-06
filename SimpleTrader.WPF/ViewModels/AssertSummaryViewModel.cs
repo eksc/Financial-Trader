@@ -10,13 +10,13 @@ namespace SimpleTrader.WPF.ViewModels
     public class AssertSummaryViewModel : ViewModelBase
     {
         private readonly AssertStore _assertStore;
-        private readonly ObservableCollection<AssertViewModel> _assets;
+        private readonly ObservableCollection<AssertViewModel> _topAsserts;
 
         public AssertSummaryViewModel(AssertStore assertStore)
         {
             _assertStore = assertStore;
 
-            _assets = new ObservableCollection<AssertViewModel>();
+            _topAsserts = new ObservableCollection<AssertViewModel>();
 
             _assertStore.StateChanged += AssertStore_StateChanged;
 
@@ -24,7 +24,7 @@ namespace SimpleTrader.WPF.ViewModels
         }
 
         public double AccountBalance => _assertStore.AccountBalance;
-        public IEnumerable<AssertViewModel> Asserts => _assets;
+        public IEnumerable<AssertViewModel> TopAsserts => _topAsserts;
 
         private void AssertStore_StateChanged()
         {
@@ -36,12 +36,15 @@ namespace SimpleTrader.WPF.ViewModels
         {
             IEnumerable<AssertViewModel> assertViewModels = _assertStore.AssertTransactions
                 .GroupBy(t => t.Asset.Symbol)
-                .Select(g => new AssertViewModel(g.Key, g.Sum(a => a.IsPurchase ? a.Shares : -a.Shares)));
+                .Select(g => new AssertViewModel(g.Key, g.Sum(a => a.IsPurchase ? a.Shares : -a.Shares)))
+                .Where(a => a.Shares > 0)
+                .OrderByDescending(a => a.Shares)
+                .Take(3);
 
-            _assets.Clear();
+            _topAsserts.Clear();
             foreach(AssertViewModel viewModel in assertViewModels)
             {
-                _assets.Add(viewModel);
+                _topAsserts.Add(viewModel);
             }
         }
     }

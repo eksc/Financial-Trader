@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SimpleTrader.WPF.ViewModels
 {
-    public class AssertViewModel
+    public class AssertViewModel : ViewModelBase
     {
         public AssertViewModel(string symbol, int shares)
         {
