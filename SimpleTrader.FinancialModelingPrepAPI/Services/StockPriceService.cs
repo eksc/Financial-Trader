@@ -12,11 +12,18 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class StockPriceService : IStockPriceService
     {
+        private readonly FinancialModelingPrepHttpClientFactory _httpClientFactory;
+
+        public StockPriceService(FinancialModelingPrepHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
         public async Task<double> GetPrice(string symbol)
         {
-            using (FinancialModelingPrepHttpClient client = new FinancialModelingPrepHttpClient())
+            using (FinancialModelingPrepHttpClient client = _httpClientFactory.CreateHttpClient())
             {
-                string uri = "stock/real-time-price/" + symbol + "?apikey=70c203a1543b06e297b86f065e29a9d8";
+                string uri = "stock/real-time-price/" + symbol;
 
                 StockPriceResult stockPriceResult = await client.GetAsync<StockPriceResult>(uri);
 

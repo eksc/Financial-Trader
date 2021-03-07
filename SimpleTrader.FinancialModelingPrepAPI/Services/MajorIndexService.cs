@@ -11,11 +11,18 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class MajorIndexService : IMajorIndexService
     {
+        private readonly FinancialModelingPrepHttpClientFactory _httpClientFactory;
+
+        public MajorIndexService(FinancialModelingPrepHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
         public async Task<MajorIndex> GetMajorIndex(MajorIndexType indexType)
         {
-            using(FinancialModelingPrepHttpClient client = new FinancialModelingPrepHttpClient())
+            using(FinancialModelingPrepHttpClient client = _httpClientFactory.CreateHttpClient())
             {
-                string uri = "majors-indexes/" + GetUriSuffix(indexType) + "?apikey=70c203a1543b06e297b86f065e29a9d8";
+                string uri = "majors-indexes/" + GetUriSuffix(indexType);
 
                 MajorIndex majorIndex = await client.GetAsync<MajorIndex>(uri);
                 majorIndex.Type = indexType;
