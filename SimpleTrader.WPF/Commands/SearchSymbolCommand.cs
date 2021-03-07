@@ -1,19 +1,19 @@
-﻿using SimpleTrader.Domain.Services;
+﻿using SimpleTrader.Domain.Exceptions;
+using SimpleTrader.Domain.Services;
 using SimpleTrader.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace SimpleTrader.WPF.Commands
 {
-    public class SearchSymbolCommand : ICommand
+    public class SearchSymbolCommand : AsyncCommandBase
     {
-        private BuyViewModel _buyViewModel;
+        private readonly BuyViewModel _buyViewModel;
         private IStockPriceService _stockPriceService;
-
-        public event EventHandler CanExecuteChanged;
 
         public SearchSymbolCommand(BuyViewModel buyViewModel, IStockPriceService stockPriceService)
         {
@@ -21,12 +21,7 @@ namespace SimpleTrader.WPF.Commands
             _stockPriceService = stockPriceService;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public async void Execute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
             try
             {
@@ -35,10 +30,14 @@ namespace SimpleTrader.WPF.Commands
                 _buyViewModel.StockPrice = stockPrice;
 
             }
+            catch (InvalidSymbolException)
+            {
+                _buyViewModel.ErrorMessgae = "Symbol does not exist.";
+            }
             catch (Exception e)
             {
 
-                MessageBox.Show(e.Message);
+                _buyViewModel.ErrorMessgae = "Failes to get symbol information.";
             }
         }
     }
