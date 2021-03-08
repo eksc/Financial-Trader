@@ -10,13 +10,15 @@ namespace SimpleTrader.WPF.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        public LoginViewModel(IAuthenticator authenticator, IRenavigator renavigator)
+        public LoginViewModel(IAuthenticator authenticator, IRenavigator loginRenavigator, IRenavigator registerRenavigator)
         {
-            LoginCommand = new LoginCommand(authenticator, this, renavigator);
+            LoginCommand = new LoginCommand(authenticator, this, loginRenavigator);
             ErrorMessageViewModel = new MessageViewModel();
+            ViewRegisterCommand = new RenavigateCommand(registerRenavigator);
         }
 
         public ICommand LoginCommand { get; }
+        public ICommand ViewRegisterCommand { get; }
 
         private string _username;
 
@@ -27,6 +29,18 @@ namespace SimpleTrader.WPF.ViewModels
             {
                 _username = value;
                 OnPropertyChanged(nameof(Username));
+            }
+        }
+
+        private string _password;
+
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
