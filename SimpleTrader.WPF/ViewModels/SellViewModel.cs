@@ -2,6 +2,7 @@
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.WPF.Commands;
 using SimpleTrader.WPF.State.Accounts;
+using SimpleTrader.WPF.State.Asserts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,31 +10,37 @@ using System.Windows.Input;
 
 namespace SimpleTrader.WPF.ViewModels
 {
-    public class BuyViewModel : ViewModelBase, ISearchSymbolViewModel
+    public class SellViewModel : ViewModelBase, ISearchSymbolViewModel
     {
-        public BuyViewModel(IStockPriceService stockPriceService, IBuyStockService buyStockService, IAccountStore accountStore)
+        public AssertListingViewModel AssertListingViewModel { get; set; }
+
+
+        public SellViewModel(AssertStore assertStore, IStockPriceService stockPriceService,
+            IAccountStore accountStore, ISellStockService sellStockService)
         {
             ErrorMessageViewModel = new MessageViewModel();
             StatusMessageViewModel = new MessageViewModel();
 
+            AssertListingViewModel = new AssertListingViewModel(assertStore);
             SearchSymbolCommand = new SearchSymbolCommand(this, stockPriceService);
-            BuyStockCommand = new BuyStockCommand(this, buyStockService, accountStore);
+            SellStockCommand = new SellStockCommand(this, sellStockService, accountStore);
         }
 
         public ICommand SearchSymbolCommand { get; set; }
-        public ICommand BuyStockCommand { get; set; }
+        public ICommand SellStockCommand { get; set; }
 
-        private string _symbol;
-
-        public string Symbol
+        private AssertViewModel _selectedAssert;
+        public AssertViewModel SelectedAssert
         {
-            get { return _symbol; }
+            get => _selectedAssert;
             set
             {
-                _symbol = value;
-                OnPropertyChanged(nameof(Symbol));
+                _selectedAssert = value;
+                OnPropertyChanged(nameof(SelectedAssert));
             }
         }
+
+        public string Symbol => SelectedAssert?.Symbol;
 
         private string _searchResultSymbol = string.Empty;
 
@@ -60,15 +67,15 @@ namespace SimpleTrader.WPF.ViewModels
             }
         }
 
-        private int _sharesToBuy;
+        private int _sharesToSell;
 
-        public int SharesToBuy
+        public int SharesToSell
         {
-            get { return _sharesToBuy; }
+            get { return _sharesToSell; }
             set
             {
-                _sharesToBuy = value;
-                OnPropertyChanged(nameof(SharesToBuy));
+                _sharesToSell = value;
+                OnPropertyChanged(nameof(SharesToSell));
                 OnPropertyChanged(nameof(TotalPrice));
             }
         }
@@ -77,7 +84,7 @@ namespace SimpleTrader.WPF.ViewModels
         {
             get
             {
-                return SharesToBuy * StockPrice;
+                return SharesToSell * StockPrice;
             }
         }
 
@@ -86,11 +93,11 @@ namespace SimpleTrader.WPF.ViewModels
         {
             set => ErrorMessageViewModel.Message = value;
         }
+
         public MessageViewModel StatusMessageViewModel { get; set; }
         public string StatusMessage
         {
             set => StatusMessageViewModel.Message = value;
         }
-
     }
 }

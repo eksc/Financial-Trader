@@ -12,12 +12,12 @@ namespace SimpleTrader.WPF.Commands
 {
     public class SearchSymbolCommand : AsyncCommandBase
     {
-        private readonly BuyViewModel _buyViewModel;
+        private readonly ISearchSymbolViewModel _viewModel;
         private IStockPriceService _stockPriceService;
 
-        public SearchSymbolCommand(BuyViewModel buyViewModel, IStockPriceService stockPriceService)
+        public SearchSymbolCommand(ISearchSymbolViewModel viewModel, IStockPriceService stockPriceService)
         {
-            _buyViewModel = buyViewModel;
+            _viewModel = viewModel;
             _stockPriceService = stockPriceService;
         }
 
@@ -25,19 +25,19 @@ namespace SimpleTrader.WPF.Commands
         {
             try
             {
-                double stockPrice = await _stockPriceService.GetPrice(_buyViewModel.Symbol);
-                _buyViewModel.SearchResultSymbol = _buyViewModel.Symbol.ToUpper();
-                _buyViewModel.StockPrice = stockPrice;
+                double stockPrice = await _stockPriceService.GetPrice(_viewModel.Symbol);
+                _viewModel.SearchResultSymbol = _viewModel.Symbol.ToUpper();
+                _viewModel.StockPrice = stockPrice;
 
             }
             catch (InvalidSymbolException)
             {
-                _buyViewModel.ErrorMessgae = "Symbol does not exist.";
+                _viewModel.ErrorMessgae = "Symbol does not exist.";
             }
             catch (Exception e)
             {
 
-                _buyViewModel.ErrorMessgae = "Failes to get symbol information.";
+                _viewModel.ErrorMessgae = "Failes to get symbol information.";
             }
         }
     }

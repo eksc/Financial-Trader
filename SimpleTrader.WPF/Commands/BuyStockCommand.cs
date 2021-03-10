@@ -36,8 +36,7 @@ namespace SimpleTrader.WPF.Commands
             {
                 string symbol = _buyViewModel.Symbol;
                 int shares = _buyViewModel.SharesToBuy;
-                Account account = await _buyStockService.BuyStock(_accountStore.CurrentAccount,
-                    _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
+                Account account = await _buyStockService.BuyStock(_accountStore.CurrentAccount, symbol, shares);
 
                 _accountStore.CurrentAccount = account;
 
