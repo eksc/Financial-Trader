@@ -14,5 +14,13 @@ namespace SimpleTrader.WPF.ViewModels
             MajorIndexListingViewModel = majorIndexListingViewModel;
             AssertSummaryViewModel = assertSummaryViewModel;
         }
+
+        public override void Dispose()
+        {
+            AssertSummaryViewModel.Dispose();
+            MajorIndexListingViewModel.Dispose();
+
+            base.Dispose();
+        }
     }
 }

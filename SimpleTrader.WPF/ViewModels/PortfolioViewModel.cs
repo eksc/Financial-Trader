@@ -16,6 +16,11 @@ namespace SimpleTrader.WPF.ViewModels
 
         public AssertListingViewModel AssertListingViewModel { get; }
 
+        public override void Dispose()
+        {
+            AssertListingViewModel.Dispose();
 
+            base.Dispose();
+        }
     }
 }

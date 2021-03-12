@@ -50,5 +50,12 @@ namespace SimpleTrader.WPF.ViewModels
             set => ErrorMessageViewModel.Message = value;
         }
 
+        public override void Dispose()
+        {
+            ErrorMessageViewModel.Dispose();
+
+            base.Dispose();
+        }
+
     }
 }

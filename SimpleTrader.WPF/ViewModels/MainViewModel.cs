@@ -28,7 +28,7 @@ namespace SimpleTrader.WPF.ViewModels
             _authenticator = authenticator;
 
             _navigator.StateChanged += Navigator_StateChanged;
-            _authenticator.StateChanged += Authenticator_StateChanged; ;
+            _authenticator.StateChanged += Authenticator_StateChanged;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(navigator, viewModelFactory);
             UpdateCurrentViewModelCommand.Execute(ViewType.Login);
@@ -42,6 +42,14 @@ namespace SimpleTrader.WPF.ViewModels
         private void Navigator_StateChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
+        }
+
+        public override void Dispose()
+        {
+            _navigator.StateChanged -= Navigator_StateChanged;
+            _authenticator.StateChanged -= Authenticator_StateChanged;
+
+            base.Dispose();
         }
     }
 }

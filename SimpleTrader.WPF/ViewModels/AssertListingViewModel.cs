@@ -45,6 +45,8 @@ namespace SimpleTrader.WPF.ViewModels
 
             assertViewModels = _filterAssert(assertViewModels);
 
+            DisposerAsserts();
+
             _asserts.Clear();
             foreach (AssertViewModel viewModel in assertViewModels)
             {
@@ -52,7 +54,21 @@ namespace SimpleTrader.WPF.ViewModels
             }
         }
 
-        
+        private void DisposerAsserts()
+        {
+            foreach (AssertViewModel assert in _asserts)
+            {
+                assert.Dispose();
+            }
+        }
+
+        public override void Dispose()
+        {
+            _assertStore.StateChanged -= AssertStore_StateChanged;
+            DisposerAsserts();
+
+            base.Dispose();
+        }
 
     }
 }

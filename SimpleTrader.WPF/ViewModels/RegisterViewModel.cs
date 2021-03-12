@@ -76,5 +76,12 @@ namespace SimpleTrader.WPF.ViewModels
             }
         }
 
+        public override void Dispose()
+        {
+            ErrorMessageViewModel.Dispose();
+            
+            base.Dispose();
+        }
+
     }
 }
