@@ -24,8 +24,17 @@ namespace SimpleTrader.WPF.Commands
             _buyViewModel = buyViewModel;
             _buyStockService = buyStockService;
             _accountStore = accountStore;
+
+            _buyViewModel.PropertyChanged += _buyViewModel_PropertyChanged;
         }
 
+        private void _buyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(BuyViewModel.CanBuyStock))
+            {
+                OnCanExecuteChanged();
+            }
+        }
 
         public override async Task ExecuteAsync(object parameter)
         {

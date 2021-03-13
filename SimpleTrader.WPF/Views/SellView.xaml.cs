@@ -38,7 +38,12 @@ namespace SimpleTrader.WPF.Views
         private void cbAsserts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbAsserts.SelectedItem != null)
-                SelectedAssertCnangedCommand?.Execute(null);
+            {
+                if (SelectedAssertCnangedCommand.CanExecute(null))
+                {
+                    SelectedAssertCnangedCommand?.Execute(null);
+                }
+            }
         }
     }
 }

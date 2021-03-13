@@ -22,8 +22,17 @@ namespace SimpleTrader.WPF.Commands
             _authenticator = authenticator;
             _loginViewModel = loginViewModel;
             _renavigator = renavigator;
+
+            _loginViewModel.PropertyChanged += _loginViewModel_PropertyChanged;
         }
 
+        private void _loginViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LoginViewModel.CanLogin))
+            {
+                OnCanExecuteChanged();
+            }
+        }
 
         public override async Task ExecuteAsync(object parameter)
         {
@@ -46,6 +55,11 @@ namespace SimpleTrader.WPF.Commands
             {
                 _loginViewModel.ErrorMessgae = "Login failed.";
             }
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return _loginViewModel.CanLogin && base.CanExecute(parameter);
         }
     }
 }
